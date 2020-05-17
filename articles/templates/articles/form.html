@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% load bootstrap4 %}
+{% block body %}
+    <div class="container col-5 mt-3">
+    <form action="{% url 'articles:review' movie.pk %}" method="POST">
+        <h3 class="text-center">{{ movie.title }}</h3>
+        {% csrf_token %}
+        {% bootstrap_form form %}
+        <button class="btn btn-primary text-center">리뷰등록</button>
+    </form>
+    </div>
+{% endblock %}

@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% load bootstrap4 %}
+{% block body %}
+<div class="container text-center">
+    <div class="card mt-3 mb-3 col-9 ">
+      <div class="card-body">
+        <img class="card-img-top mb-4" style="width: 25rem; height: 25rem;" src="{{ review.movie.image_thumbnail.url }}" alt="Card image cap">
+        <h5 class="card-title">{{ review.title }}</h5>
+        <p class="card-text">{{ review.content }}</p>
+        <p class="card-text text-right">좋아요 수 : {{ review.like_users.count }}</p>
+        <p class="card-text"><small class="text-muted">created_at : {{ review.created_at }}</small></p>
+        <p class="card-text"><small class="text-muted">writer: {{ review.user }}</small></p>
+      </div>
+    </div>
+      {% if request.user == review.user %}
+      <a href="{% url 'articles:delete' review.pk %}" class="btn btn-primary">삭제하기</a>
+      <a href="{% url 'articles:update' review.pk %}" class="btn btn-primary">수정하기</a>
+      {% endif %}
+			{% for comment in comments %}
+  			<div class="card col-9 mt-4">
+  				<div class="card-header bg-white  text-right">
+  				댓글 작성자 : {{ comment.user }}
+  				</div>
+  				<div class="card-body  text-right">
+  					<blockquote class="blockquote mb-0">
+  						<p>{{ comment.content }}</p>
+  					</blockquote>
+  				</div>
+  				<form action="{% url 'articles:comments_delete' review.pk comment.pk %}">
+  				    {% if request.user == comment.user %}
+  				        <button class="btn btn-danger mb-3 ml-auto mr-2 d-block">댓글삭제</button>
+  				    {% endif %}
+  				</form>
+  			</div>
+			{% endfor %}
+	    <div class="col-9 ">
+      <form action="{% url 'articles:comments' review.pk %}" method="POST">
+        {% csrf_token %}
+        {% bootstrap_form form %}
+        <button class="btn btn-primary text-center">댓글등록</button>
+      </form>
+    </div>
+</div>
+{% endblock %}

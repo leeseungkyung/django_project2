@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% load bootstrap4 %}
+{% block body %}
+    <div class="container col-5 mt-3">
+    <form action="{% url 'accounts:signup' %}" method="POST">
+        {% csrf_token %}
+        {% bootstrap_form form %}
+        <button class="btn btn-primary text-center">가입하기</button>
+    </form>
+    </div>
+{% endblock %}

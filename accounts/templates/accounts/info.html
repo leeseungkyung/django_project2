@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% load bootstrap4 %}
+{% block body %}
+  	<div class="card col-9 mt-4 align-items-center ">
+      	<div class="card-header bg-white  text-center">
+      	    <h2 class="d-inline">{{ user.username }}님 </h2><p class="d-inline">개인정보 관리</p>
+      	</div>
+      	<div class="card-body">
+            {% with user_followers=user.followers.all %}
+                <!--자기자신은 자기자신을 팔로우 못한다-->
+                {% if request.user != user %}
+                    {% if request.user in user_followers %}
+                        <a href="{% url 'accounts:follow' user.username %}" class="btn btn-primary mb-3">UnFollow</a>
+                    {% else %}
+                        <a href="{% url 'accounts:follow' user.username %}"  class="btn btn-primary mb-3">Follow</a>
+                    {% endif %}
+                {% endif %}
+
+                <p>Follow : {{ user_followers|length }}명 </p>
+                <p>Following : {{ user_followings|length }}명</p>
+            {% endwith %}
+      	</div>
+  	</div>
+{% endblock %}

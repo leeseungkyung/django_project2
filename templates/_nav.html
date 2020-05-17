@@ -1,0 +1,31 @@
+     <nav class="navbar bg-light text-muted justify-content-between">
+      <a class="navbar-brand" href="/articles/">PROJECT</a>
+      {% if request.user.username %}
+      <a class="navbar-brand" href="/articles/">{{request.user.username}} 님 환영합니다.</a>
+      <ul class="nav nav-pills">
+
+        <li class="nav-item">
+            <a class="navbar-brand justify-content-right"  href="{% url 'accounts:logout' %}">로그아웃</a>
+        </li>
+        <li class="nav-item">
+            <a class="navbar-brand justify-content-right"  href="{% url 'articles:review_list' %}">리뷰보기</a>
+        </li>
+        <li class="nav-item">
+            <a class="navbar-brand justify-content-right"  href="{% url 'accounts:info' request.user.username %}">팔로워/팔로우</a>
+        </li>
+      </ul>
+      {% else %}
+          <ul class="nav nav-pills">
+            <li class="nav-item">
+                <a class="navbar-brand justify-content-right"  href="{% url 'articles:review_list' %}">리뷰보기</a>
+            </li>
+            <li class="nav-item">
+              <a class="navbar-brand justify-content-right" href="{% url 'accounts:signup' %}">회원가입</a>
+            </li>
+            <li class="nav-item">
+                <a class="navbar-brand justify-content-right"  href="{% url 'accounts:login' %}">로그인</a>
+            </li>
+        </ul>
+      {% endif %}
+
+    </nav>

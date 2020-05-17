@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block body %}
+<div class="row mt-3">
+    {% for movie in movies %}
+      <div class="col-sm-3 ">
+        <div class="card mb-3" style="width: 25rem; height: 15rem;">
+          <a href=""><img class="card-img-top" src="{{ movie.image_thumbnail.url }}" alt="Card image cap"></a>
+          <div class="card-body text-center">
+            <h5 class="card-text d-inline mr-4">{{ movie.title }} </h5>
+            <a href="{% url 'articles:review' movie.pk %}"><span class="badge badge-pill badge-info">리뷰쓰기</span></a>
+          </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
